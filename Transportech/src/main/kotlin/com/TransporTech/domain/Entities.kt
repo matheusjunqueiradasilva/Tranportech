@@ -13,9 +13,4 @@ data class Motoristas(
     var id: Long? = null,
     val nome: String?,
     val DataAdmissao: LocalDate?,
-    val cnh: Int? =null,
-
-
-
-
-    )
+    val cnh: Int? =null, )
