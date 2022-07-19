@@ -1,7 +1,7 @@
 package com.TransporTech.interfaces
 
-import com.TransporTech.domain.Motoristas
-import com.TransporTech.domain.MotoristasRepository
+import com.TransporTech.domain.*
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -17,38 +17,37 @@ import javax.persistence.Id
 
 @Service
 @RestController
-@RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE]) //retorna um json da funcao
-class MotoristasApi (
+@RequestMapping(path = ["/motoristas"] ,produces = [MediaType.APPLICATION_JSON_VALUE]) //retorna um json da funcao
+
+class motoristasApi (
 
     val motoristasRepository: MotoristasRepository // referencia a motorista rpository
 
 ) {
-    @GetMapping("/motoristas") //get e lista todos os motoristas
+    @GetMapping //get e lista todos os motoristas
         fun listarMotoristas() = motoristasRepository.findAll()
 
-    @GetMapping("/motoristas/{id}")
-        fun findMotorista(@PathVariable("id") Id:Long) =
-            motoristasRepository.findById(Id).get()
+    @GetMapping("/{id}")
+    fun findMotorista(@PathVariable("id")id: Long)=
+        motoristasRepository.findById(id)
+            .orElseThrow{ResponseStatusException(HttpStatus.NOT_FOUND)}
 
-    @PostMapping("/motoristas") // função que implementa o método post
+    @PostMapping
     fun criarMotorista(@RequestBody motoristas: Motoristas)= motoristasRepository.save(motoristas)
 
 
-    @PutMapping("/motoristas/{id}")
-        fun fullUpdateMotorista(@PathVariable("id") id: Long, @RequestBody motoristas: Motoristas): Motoristas {
+    @PutMapping("/{id}")
+        fun UpdateMotoristaName(@PathVariable("id") id: Long, @RequestBody motoristas: Motoristas): Motoristas {
             val achaMotorista = findMotorista(id)
             val copiaMotorista = achaMotorista.copy(
                 DataAdmissao = motoristas.DataAdmissao?:achaMotorista.DataAdmissao,
                 nome = motoristas.nome
-
-
             )
         return motoristasRepository.save(copiaMotorista)
         }
 
-    @DeleteMapping("/motoristas/{id}")
+    @DeleteMapping("/{id}")
         fun deleteMotorista(@PathVariable("id") id: Long) = motoristasRepository.deleteById(id)
-
-
 }
+
 

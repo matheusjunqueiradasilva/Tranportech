@@ -19,3 +19,27 @@ data class Motoristas(
 
 
     )
+@Entity
+data class Encomenda(
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    val nome: String?,
+    val dataCompra: LocalDate?,
+    val NumerodaEncomenda: Long? =null,
+
+
+
+)
+@Entity
+data class Cliente(
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    val nome: String?,
+    val CPF: Long? = null,
+
+
+
+
+)
