@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import javax.persistence.Id
 
+
+
 @Service
 @RestController
 @RequestMapping(path = ["/motoristas"] ,produces = [MediaType.APPLICATION_JSON_VALUE]) //retorna um json da funcao
@@ -48,6 +50,8 @@ class motoristasApi (
 
     @DeleteMapping("/{id}")
         fun deleteMotorista(@PathVariable("id") id: Long) = motoristasRepository.deleteById(id)
+
+
 }
 
 
